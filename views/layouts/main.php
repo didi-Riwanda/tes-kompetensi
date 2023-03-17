@@ -47,6 +47,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     ['label' => 'Petugas', 'url' => ['/petugas']],
                     ['label' => 'Ruang', 'url' => ['/ruang']],
                     ['label' => 'Pasien', 'url' => ['/pasien']],
+                    ['label' => 'Obat', 'url' => ['/obat']],
+                    ['label' => 'Tindakan', 'url' => ['/tindakan']],
                     // ['label' => 'Rawat Inap', 'url' => ['/rawat-inap']],
                 ]
             ],
@@ -54,9 +56,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             ['label' => 'Laporan', 'url' => ['/pembayaran/laporan']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
             Yii::$app->user->isGuest
-                ? ['label' => 'Login', 'url' => ['/site/login']]
+                ? ['label' => 'Login', 'url' => ['/user/security/login']]
                 : '<li class="nav-item">'
-                    . Html::beginForm(['/site/logout'])
+                    . Html::beginForm(['/user/security/logout'])
                     . Html::submitButton(
                         'Logout (' . Yii::$app->user->identity->username . ')',
                         ['class' => 'nav-link btn btn-link logout']

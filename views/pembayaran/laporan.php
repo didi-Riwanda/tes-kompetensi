@@ -1,20 +1,19 @@
-
 <?php
 
 $nm_pasien = [];
-foreach ($ts as $laporan){
-    $nm_pasien[] = $laporan['nama_pasien'];
+foreach ($tb as $jml){
+    $nm_pasien[] = $jml['total'];
 }
 
-// $total = [];
-// foreach ($ts as $tl){
-//     $total[] = $tl['total_bayar'];
-// }
+$nm = [];
+foreach ($pasien as $psn){
+    $nm[] = $psn->pasien->nama_pasien;
+}
 
 
 ?>
 
-<?=
+<?= 
 \dosamigos\highcharts\HighCharts::widget([
     'clientOptions' => [
         'chart' => [
@@ -24,16 +23,19 @@ foreach ($ts as $laporan){
             'text' => 'Laporan Pengunjung Pasien'
         ],
         'xAxis' => [
-            'categories' => $nm_pasien
+            'categories' => $nm             
         ],
         'yAxis' => [
             'text' => [
-                'Stok Obat'
+                'Jadwal Kunjungan'
             ]
         ],
         'series' => [
-            ['name' => 'Masuk', 'data' => [1, 2, 4]],
-            ['name' => 'Total Bayar', 'data' => [20000, 30000, 50000, 25000, 35000]]
+              ['name' => 'Jumlah Kunjungan', 'data' => $nm_pasien],
+            //['name' => 'Total Bayar', 'data' => [20000, 30000, 50000]]
+           
         ]
     ]
     ]);
+?>
+

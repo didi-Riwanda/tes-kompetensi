@@ -2,17 +2,17 @@
 
 namespace app\controllers;
 
-use app\models\Pembayaran;
-use app\models\PembayaranSearch;
+use app\models\Obat;
+use app\models\ObatSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use Yii;
 
 /**
- * PembayaranController implements the CRUD actions for Pembayaran model.
+ * ObatController implements the CRUD actions for Obat model.
  */
-class PembayaranController extends Controller
+class ObatController extends Controller
 {
     /**
      * @inheritDoc
@@ -33,13 +33,13 @@ class PembayaranController extends Controller
     }
 
     /**
-     * Lists all Pembayaran models.
+     * Lists all Obat models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new PembayaranSearch();
+        $searchModel = new ObatSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,44 +48,39 @@ class PembayaranController extends Controller
         ]);
     }
 
-    // Laporan
-    public function actionLaporan()
-    {
-        $DB = Yii::$app->db; 
-        $pasien = Pembayaran::find()->groupBy("id_pasien")->all();
+    public function actionObat(){
+        $DB = Yii::$app->db;
+        $obat = Obat::find()->groupBy("id_obat")->all();
+        $stok = $DB->createCommand("SELECT *, COUNT(id_obat) AS stok FROM `obat` GROUP BY id_obat;")->queryAll();
         
-        $tb = $DB->createCommand("SELECT *,COUNT(id_pasien) AS total FROM `pembayaran` GROUP BY id_pasien;")->queryAll();
-
-        return $this->render('laporan', compact("tb", "pasien")); 
-
-        //$tb = $DB->createCommand("SELECT pasien.nama_pasien, COUNT(pembayaran.id_pasien) AS jml FROM pembayaran INNER JOIN pasien ON pembayaran.id_pasien = pasien.id_pasien GROUP BY pembayaran.id_pasien;")->queryAll();            
+        return $this->render('obat', compact("obat", "stok"));
     }
- 
+
     /**
-     * Displays a single Pembayaran model.
-     * @param int $id_pembayaran Id Pembayaran
+     * Displays a single Obat model.
+     * @param int $id_obat Id Obat
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id_pembayaran)
+    public function actionView($id_obat)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id_pembayaran),
+            'model' => $this->findModel($id_obat),
         ]);
     }
 
     /**
-     * Creates a new Pembayaran model.
+     * Creates a new Obat model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Pembayaran();
+        $model = new Obat();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id_pembayaran' => $model->id_pembayaran]);
+                return $this->redirect(['view', 'id_obat' => $model->id_obat]);
             }
         } else {
             $model->loadDefaultValues();
@@ -97,18 +92,18 @@ class PembayaranController extends Controller
     }
 
     /**
-     * Updates an existing Pembayaran model.
+     * Updates an existing Obat model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id_pembayaran Id Pembayaran
+     * @param int $id_obat Id Obat
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id_pembayaran)
+    public function actionUpdate($id_obat)
     {
-        $model = $this->findModel($id_pembayaran);
+        $model = $this->findModel($id_obat);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id_pembayaran' => $model->id_pembayaran]);
+            return $this->redirect(['view', 'id_obat' => $model->id_obat]);
         }
 
         return $this->render('update', [
@@ -117,33 +112,32 @@ class PembayaranController extends Controller
     }
 
     /**
-     * Deletes an existing Pembayaran model.
+     * Deletes an existing Obat model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id_pembayaran Id Pembayaran
+     * @param int $id_obat Id Obat
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id_pembayaran)
+    public function actionDelete($id_obat)
     {
-        $this->findModel($id_pembayaran)->delete();
+        $this->findModel($id_obat)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Pembayaran model based on its primary key value.
+     * Finds the Obat model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id_pembayaran Id Pembayaran
-     * @return Pembayaran the loaded model
+     * @param int $id_obat Id Obat
+     * @return Obat the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id_pembayaran)
+    protected function findModel($id_obat)
     {
-        if (($model = Pembayaran::findOne(['id_pembayaran' => $id_pembayaran])) !== null) {
+        if (($model = Obat::findOne(['id_obat' => $id_obat])) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-
 }

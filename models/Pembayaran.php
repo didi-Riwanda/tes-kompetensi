@@ -71,12 +71,4 @@ class Pembayaran extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Petugas::class, ['id_petugas' => 'id_petugas']);
     }
-
-    //Highchart from 2amigos
-    // public static function laporan()
-    // {
-    //     $sql = "SELECT pembayaran.id_pembayaran, COUNT( FROM obat";
-    //     $rs = Yii::$app->db->createCommand($sql)->queryAll();
-    //     return $rs;
-    // }
 }

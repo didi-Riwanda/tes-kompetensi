@@ -54,7 +54,7 @@ class Pasien extends \yii\db\ActiveRecord
             'alamat' => 'Alamat',
             'tgl_datang' => 'Tgl Datang',
             'keluhan' => 'Keluhan',
-            'id_dokter' => 'Id Dokter',
+            'id_dokter' => 'Nama Dokter',
         ];
     }
 

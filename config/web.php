@@ -12,22 +12,22 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
-        //RBAC
-        // 'authManager' => [
-        //     'class' => 'yii\rbac\DbManager',
-        // ],
-
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager', //atau boleh juga PhpManager,
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'sQ9Oywqd2g8pmhHmqMNf2a_A_43lH8Ic',
         ],
         'cache' => [
-            'class' => 'yii\caching\FileCache',
+           'class' => 'yii\caching\FileCache',
         ],
+        /*
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
         ], 
+        */
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
@@ -47,7 +47,7 @@ $config = [
             ],
         ],
         'db' => $db,
-        // comment tadi
+        
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -57,17 +57,26 @@ $config = [
         
     ],
     'params' => $params,
-    //tambahan untuk dektrium
+
     'modules' => [
         'user' => [
             'class' => 'dektrium\user\Module',
             'enableUnconfirmedLogin' => false,
-            'admins' => ['admin', 'nasrul'],
+            'admins' => ['admin', 'didi'],
         ],
         'admin' => [
-            'class' => 'mdm\admin\module',
+            'class' => 'mdm\admin\Module',
             'layout' => 'left-menu',
-            'mainLayout' => '@app/views/layouts/main.php'
+            'mainLayout' => '@app/views/layouts/main.php',
+        ]
+    ],
+    'as access' => [
+        'class' => 'mdm\admin\components\AccessControl',
+        'allowActions' => [
+            'site/*',
+            //'*',
+            'user/security/login',
+            'user/security/logout'
         ]
     ],
 ];
